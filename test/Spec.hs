@@ -5,8 +5,8 @@ import Lambda (parseTerm, Term(..), Info(..))
 
 main :: IO ()
 main = do
-	runTestTT tests
-	return ()
+  runTestTT tests
+  return ()
 
 test1 = TestCase (assertEqual "\\x.x" (Right $ Abs Info "x" (Var Info 0 1)) (parseTerm "\\x.x"))
 
