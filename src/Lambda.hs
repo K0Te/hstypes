@@ -1,7 +1,10 @@
-module Lambda (Term(..), showTerm, Binding(..), Info(..), reval, termParser, parseApp, parseVar) where
+module Lambda (Term(..), showTerm, Binding(..), Info(..), reval, termParser, parseApp, parseVar, parseTerm) where
 
+import Data.List(elemIndex)
+import Data.Maybe
+import Debug.Trace
 import Text.Parsec
-import Text.ParserCombinators.Parsec
+-- import Text.ParserCombinators.Parsec
 import Text.Parsec.String
 import Text.ParserCombinators.Parsec.Char
 
@@ -14,28 +17,40 @@ data Term = Var Info Int Int |
 data Binding = Binding deriving Show
 type Context = [(String, Binding)]
 
-termParser :: Parser Term
+type VarName = String
+type TermParser = Parsec String [VarName] Term
+
+parseTerm = runParser termParser []  "<input>"
+
+termParser :: TermParser
 termParser = parseApp <|> parseAbs <|> parseVar
 
-parseApp :: Parser Term
+parseApp :: TermParser
 parseApp = Text.Parsec.try $ do
   term1 <- parseAbs <|> parseVar
   space
   term2 <- parseAbs <|> parseVar <|> parseApp
   return $ App Info term1 term2
 
-parseAbs :: Parser Term
+parseAbs :: TermParser
 parseAbs = do
   char '\\'
   var_name <- many alphaNum
+  modifyState (\s -> var_name:s)
   char '.'
   term <- termParser
+  modifyState (\(x:xs) -> xs)
   return $ Abs Info var_name term
 
-parseVar :: Parser Term
+parseVar :: TermParser
 parseVar = do
   var_name <- many1 lower
-  return $ Var Info 0 0 -- TODO not 0 !
+  state <- getState
+  let var_index = elemIndex var_name state
+  maybe
+    (unexpected $ "No var found: " ++ var_name)
+    (\var_index -> return $ Var Info var_index (length state))
+    var_index
 
 index_to_name :: Info -> Context -> Int -> String
 index_to_name _ ctx n = fst $ ctx !! n

@@ -2,6 +2,7 @@
 module Main where
 
 import Data.Monoid
+import Text.Parsec (runParser)
 import Data.Functor.Identity
 import Control.Monad
 import Control.Monad.Trans.Class
@@ -23,6 +24,7 @@ mainL = do
   putStrLn $ showTerm ctx term
   res <- reval ctx term
   putStrLn $ showTerm ctx res
+  print $ runParser termParser ["xxx"]  "<xxx>" "\\x.x \\x.x"
   where term = App Info (Abs Info "x" $ Var Info 0 2) (Abs Info "z" $ Var Info 1 2)
         ctx = [("x", Binding)]
 
