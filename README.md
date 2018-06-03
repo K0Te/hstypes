@@ -1,1 +1,1 @@
-# hstypes
+# simple
