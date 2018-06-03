@@ -1,0 +1,80 @@
+-- This file has been generated from package.yaml by hpack version 0.20.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 9acaa30f52e7291096d917bea9960a390c00d9ed0cd8623e8853c42ab61c8507
+
+name:           simple
+version:        0.1.0.0
+description:    Please see the README on Github at <https://github.com/githubuser/simple#readme>
+homepage:       https://github.com/githubuser/simple#readme
+bug-reports:    https://github.com/githubuser/simple/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2018 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+cabal-version:  >= 1.10
+
+extra-source-files:
+    ChangeLog.md
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/simple
+
+library
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+     , deepseq
+     , aeson
+     , transformers
+     , random
+     , criterion
+     , bytestring
+     , network
+     , text
+     , sqlite-simple
+     , raw-strings-qq
+     , parsec
+  exposed-modules:
+      Lib,
+      HList,
+      Queue,
+      FingerDebug,
+      CatTheory,
+      Lambda
+  other-modules:
+      Paths_simple
+  default-language: Haskell2010
+
+executable simple-exe
+  main-is: Main.hs
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , simple
+    , transformers
+    , parsec
+  other-modules:
+      Paths_simple
+  default-language: Haskell2010
+
+test-suite simple-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , simple
+  other-modules:
+      Paths_simple
+  default-language: Haskell2010
