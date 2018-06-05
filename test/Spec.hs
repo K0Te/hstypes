@@ -1,13 +1,46 @@
-import Test.HUnit
-import Data.Either
+import           Test.HUnit
+import           Data.Either
+import           System.Exit
 
-import Lambda (parseTerm, Term(..), Info(..))
+import           Lambda                         ( parseTerm
+                                                , Term(..)
+                                                , Info(..)
+                                                )
 
 main :: IO ()
 main = do
-  runTestTT tests
-  return ()
+  cnt <- runTestTT tests
+  let failCount = (errors cnt) + (failures cnt)
+      exitCode  = if failCount == 0 then ExitSuccess else ExitFailure 1
+  exitWith exitCode
 
-test1 = TestCase (assertEqual "\\x.x" (Right $ Abs Info "x" (Var Info 0 1)) (parseTerm "\\x.x"))
+test1 = TestCase
+  (assertEqual "\\x.x" (Right $ Abs Info "x" (Var Info 0 1)) (parseTerm "\\x.x")
+  )
+test2 = TestCase
+  (assertEqual " ( \\x.( x ) ) "
+               (Right $ Abs Info "x" (Var Info 0 1))
+               (parseTerm " ( \\x.( x ) ) ")
+  )
+test3 = TestCase
+  (assertEqual "(\\x.(x))"
+               (Right $ Abs Info "x" (Var Info 0 1))
+               (parseTerm "(\\x.(x))")
+  )
 
-tests = TestList [TestLabel "test1" test1]
+test4 = TestCase
+  (assertEqual "\\x.x x"
+               (Right $ Abs Info "x" $
+                  App Info
+                    (Var Info 0 1)
+                    (Var Info 0 1)
+                    )
+               (parseTerm "\\x.x x")
+  )
+
+tests = TestList
+  [ TestLabel "parse simple abstraction"    test1
+  , TestLabel "abstraction, paren + spaces" test2
+  , TestLabel "abstraction, paren"          test3
+  , TestLabel "abstraction + apply"         test4
+  ]
