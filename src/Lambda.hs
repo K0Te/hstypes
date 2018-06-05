@@ -23,7 +23,18 @@ type TermParser = Parsec String [VarName] Term
 parseTerm = runParser termParser []  "<input>"
 
 termParser :: TermParser
-termParser = parseApp <|> parseAbs <|> parseVar
+termParser = parseApp <|> parseAbs <|> parseVar <|> parenTerm
+
+parenTerm :: TermParser
+parenTerm = try $ do
+  skipMany space
+  char '('
+  skipMany space
+  term <- termParser
+  skipMany space
+  char ')'
+  skipMany space
+  return term
 
 parseApp :: TermParser
 parseApp = Text.Parsec.try $ do
