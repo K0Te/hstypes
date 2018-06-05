@@ -55,6 +55,16 @@ test6 = TestCase
     (parseTerm "\\x.x x x x")
   )
 
+test7 = TestCase
+  (assertEqual
+    "\\x.\\y.x y"
+    (Right $ Abs Info "x" $ Abs Info "y" $ App Info
+                                               (Var Info 1 2)
+                                               (Var Info 0 2)
+    )
+    (parseTerm "\\x.\\y.x y")
+  )
+
 tests = TestList
   [ TestLabel "parse simple abstraction"     test1
   , TestLabel "abstraction, paren + spaces"  test2
@@ -62,4 +72,5 @@ tests = TestList
   , TestLabel "abstraction + apply"          test4
   , TestLabel "apply associated to the left" test5
   , TestLabel "apply associated to the left" test6
+  , TestLabel "abstraction extend to right"  test7
   ]
