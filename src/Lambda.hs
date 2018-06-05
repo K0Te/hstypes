@@ -37,11 +37,9 @@ parenTerm = try $ do
   return term
 
 parseApp :: TermParser
-parseApp = Text.Parsec.try $ do
-  term1 <- parseAbs <|> parseVar
-  space
-  term2 <- parseAbs <|> parseVar <|> parseApp
-  return $ App Info term1 term2
+parseApp = try $ do
+      (term:terms) <- (parseAbs <|> parseVar <|> parenTerm) `sepBy1` space
+      return $ foldl (\acc el -> App Info acc el) term terms
 
 parseAbs :: TermParser
 parseAbs = do

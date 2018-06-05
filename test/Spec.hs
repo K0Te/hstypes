@@ -30,17 +30,36 @@ test3 = TestCase
 
 test4 = TestCase
   (assertEqual "\\x.x x"
-               (Right $ Abs Info "x" $
-                  App Info
-                    (Var Info 0 1)
-                    (Var Info 0 1)
-                    )
+               (Right $ Abs Info "x" $ App Info (Var Info 0 1) (Var Info 0 1))
                (parseTerm "\\x.x x")
   )
 
+test5 = TestCase
+  (assertEqual
+    "\\x.x x x"
+    (Right $ Abs Info "x" $ App Info
+                                (App Info (Var Info 0 1) (Var Info 0 1))
+                                (Var Info 0 1)
+    )
+    (parseTerm "\\x.x x x")
+  )
+
+test6 = TestCase
+  (assertEqual
+    "\\x.x x x x"
+    (Right $ Abs Info "x" $ App
+      Info
+      (App Info (App Info (Var Info 0 1) (Var Info 0 1)) (Var Info 0 1))
+      (Var Info 0 1)
+    )
+    (parseTerm "\\x.x x x x")
+  )
+
 tests = TestList
-  [ TestLabel "parse simple abstraction"    test1
-  , TestLabel "abstraction, paren + spaces" test2
-  , TestLabel "abstraction, paren"          test3
-  , TestLabel "abstraction + apply"         test4
+  [ TestLabel "parse simple abstraction"     test1
+  , TestLabel "abstraction, paren + spaces"  test2
+  , TestLabel "abstraction, paren"           test3
+  , TestLabel "abstraction + apply"          test4
+  , TestLabel "apply associated to the left" test5
+  , TestLabel "apply associated to the left" test6
   ]
