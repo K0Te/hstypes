@@ -45,7 +45,6 @@ library
       Lib,
       HList,
       Queue,
-      FingerDebug,
       CatTheory,
       Lambda
   other-modules:
