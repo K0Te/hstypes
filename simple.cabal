@@ -41,12 +41,16 @@ library
      , sqlite-simple
      , raw-strings-qq
      , parsec
+     , singletons
   exposed-modules:
       Lib,
       HList,
       Queue,
       CatTheory,
-      Lambda
+      Lambda,
+      Gadts,
+      Kinds,
+      SingletonLib
   other-modules:
       Paths_simple
   default-language: Haskell2010

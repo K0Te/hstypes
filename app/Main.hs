@@ -13,7 +13,6 @@ import qualified Control.Monad.Trans.Maybe  as M
 import Lib
 import HList
 import Queue
-import FingerDebug
 import Lambda
 
 main :: IO ()
