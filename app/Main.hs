@@ -14,18 +14,19 @@ import Lib
 import HList
 import Queue
 import Lambda
+import PurelyFunctQueue
 
 main :: IO ()
-main = mainL
+main = profile
 
-mainL :: IO ()
-mainL = do
-  putStrLn $ showTerm ctx term
-  res <- reval ctx term
-  putStrLn $ showTerm ctx res
-  print $ runParser termParser ["xxx"]  "<xxx>" "\\x.x \\x.x"
-  where term = App Info (Abs Info "x" $ Var Info 0 2) (Abs Info "z" $ Var Info 1 2)
-        ctx = [("x", Binding)]
+-- mainL :: IO ()
+-- mainL = do
+  -- putStrLn $ showTerm ctx term
+  -- res <- reval ctx term
+  -- putStrLn $ showTerm ctx res
+  -- print $ runParser termParser ["xxx"]  "<xxx>" "\\x.x \\x.x"
+  -- where term = App Info (Abs Info "x" $ Var Info 0 2) (Abs Info "z" $ Var Info 1 2)
+  --       ctx = [("x", Binding)]
 
 newtype Moi s a = Moi { runMoi :: s -> (a, s) }
 instance Functor (Moi s) where

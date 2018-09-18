@@ -50,16 +50,26 @@ insert_and_drain n = let q = foldl' (\q e -> snoc (show e) q) empty [1..n]
                      in foldl' (\q e -> PurelyFunctQueue.tail q) q [1..n-1]
 
 profile = defaultMain [
-       bgroup "insert" [ bench "insert 10" $ whnf insert 10
-                    , bench "insert 100" $ whnf insert 100
-                    , bench "insert 1000" $ whnf insert 1000
-                    , bench "insert 10000" $ whnf insert 10000
-                    , bench "insert 100000" $ whnf insert 100000
+       bgroup "insert" [
+                      bench "insert 1*10**3" $ whnf insert 10000
+                    , bench "insert 2*10**3" $ whnf insert 20000
+                    , bench "insert 5*10**3" $ whnf insert 50000
+                    , bench "insert 1*10**4" $ whnf insert 100000
+                    , bench "insert 2*10**4" $ whnf insert 200000
+                    , bench "insert 5*10**4" $ whnf insert 500000
+                    , bench "insert 1*10**5" $ whnf insert 1000000
+                    , bench "insert 2*10**5" $ whnf insert 2000000
+                    , bench "insert 5*10**5" $ whnf insert 5000000
                     ],
-       bgroup "insert_and_drain" [ bench "insert_and_drain 10" $ whnf insert_and_drain 10
-                    , bench "insert_and_drain 100" $ whnf insert_and_drain 100
-                    , bench "insert_and_drain 1000" $ whnf insert_and_drain 1000
-                    , bench "insert_and_drain 10000" $ whnf insert_and_drain 10000
-                    , bench "insert_and_drain 100000" $ whnf insert_and_drain 100000
+       bgroup "insert_and_drain" [
+                      bench "insert_and_drain 1*10**3" $ whnf insert_and_drain 10000
+                    , bench "insert_and_drain 2*10**3" $ whnf insert_and_drain 20000
+                    , bench "insert_and_drain 5*10**3" $ whnf insert_and_drain 50000
+                    , bench "insert_and_drain 1*10**4" $ whnf insert_and_drain 100000
+                    , bench "insert_and_drain 2*10**4" $ whnf insert_and_drain 200000
+                    , bench "insert_and_drain 5*10**4" $ whnf insert_and_drain 500000
+                    , bench "insert_and_drain 1*10**5" $ whnf insert_and_drain 1000000
+                    , bench "insert_and_drain 2*10**5" $ whnf insert_and_drain 2000000
+                    , bench "insert_and_drain 5*10**5" $ whnf insert_and_drain 5000000
                     ]
       ]

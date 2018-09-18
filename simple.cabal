@@ -42,6 +42,7 @@ library
      , raw-strings-qq
      , parsec
      , singletons
+     , criterion
   exposed-modules:
       Lib,
       HList,
@@ -50,7 +51,8 @@ library
       Lambda,
       Gadts,
       Kinds,
-      SingletonLib
+      SingletonLib,
+      PurelyFunctQueue
   other-modules:
       Paths_simple
   default-language: Haskell2010
