@@ -15,6 +15,7 @@ import HList
 import Queue
 import Lambda
 import PurelyFunctQueue
+import PurelyFunctMergeSort
 
 main :: IO ()
 main = profile
