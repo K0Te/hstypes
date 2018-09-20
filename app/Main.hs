@@ -18,7 +18,7 @@ import PurelyFunctQueue
 import PurelyFunctMergeSort
 
 main :: IO ()
-main = profile
+main = PurelyFunctMergeSort.profile
 
 -- mainL :: IO ()
 -- mainL = do
