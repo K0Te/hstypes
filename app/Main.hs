@@ -17,9 +17,10 @@ import Lambda
 import PurelyFunctQueue
 import PurelyFunctMergeSort
 import PurelyFuncRTQueue
+import PurelyFuncDeque
 
 main :: IO ()
-main = PurelyFuncRTQueue.profile
+main = PurelyFunctQueue.profile
 
 -- mainL :: IO ()
 -- mainL = do

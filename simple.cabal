@@ -54,7 +54,8 @@ library
       SingletonLib,
       PurelyFunctQueue,
       PurelyFunctMergeSort,
-      PurelyFuncRTQueue
+      PurelyFuncRTQueue,
+      PurelyFuncDeque
   other-modules:
       Paths_simple
   default-language: Haskell2010
