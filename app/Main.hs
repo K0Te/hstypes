@@ -18,9 +18,10 @@ import PurelyFunctQueue
 import PurelyFunctMergeSort
 import PurelyFuncRTQueue
 import PurelyFuncDeque
+import PurelyFuncRTDeque
 
 main :: IO ()
-main = PurelyFunctQueue.profile
+main = PurelyFuncRTDeque.profile
 
 -- mainL :: IO ()
 -- mainL = do
