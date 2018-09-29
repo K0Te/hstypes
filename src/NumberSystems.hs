@@ -93,7 +93,7 @@ instance Number DenseBinary where
       recToInt [] = 0
       recToInt (x:xs) = (if x then 1 else 0) + 2 * recToInt xs
 
-newtype SparseBinary = SparseBinary [Int]
+newtype SparseBinary = SparseBinary [Int] deriving Show
 unpackSparse (SparseBinary x) = x
 
 recInc :: Int -> [Int] -> [Int]
