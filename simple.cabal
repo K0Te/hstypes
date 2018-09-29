@@ -56,7 +56,8 @@ library
       PurelyFunctMergeSort,
       PurelyFuncRTQueue,
       PurelyFuncDeque,
-      PurelyFuncRTDeque
+      PurelyFuncRTDeque,
+      NumberSystems
   other-modules:
       Paths_simple
   default-language: Haskell2010
