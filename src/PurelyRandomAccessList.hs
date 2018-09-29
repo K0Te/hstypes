@@ -54,3 +54,20 @@ lookupL :: Int -> RList a -> a
 lookupL _ (RList []) = error "Empty list"
 lookupL n (RList (Zero:xs)) = lookupL n (RList xs)
 lookupL n (RList ((One t):xs)) = if n < size t then lookupInTree n t else lookupL (n-size t) (RList xs)
+
+updateInTree :: (Int, a) -> Tree a -> Tree a
+updateInTree (0, v) (Leaf _) = Leaf v
+updateInTree _ (Leaf _) = error "Empty tree"
+updateInTree (n, val) (Node sz t1 t2) =
+  if n < sz `div` 2
+  then Node sz (updateInTree (n, val) t1) t2
+  else Node sz t1 (updateInTree (n - (sz `div` 2), val) t2)
+
+update :: (Int, a) -> RList a -> RList a
+update _ (RList []) = error "Empty list"
+update (n, val) (RList (Zero:xs)) = update (n,val) (RList xs)
+update (n, val) (RList ((One t):xs)) =
+  let t_size = size t in
+  if n < t_size
+  then RList $ (One $ updateInTree (n, val) t):xs
+  else RList $ (One t):(unpack $ update (n-t_size, val) (RList xs))
