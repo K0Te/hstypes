@@ -57,6 +57,7 @@ library
       PurelyFuncRTQueue,
       PurelyFuncDeque,
       PurelyFuncRTDeque,
+      PurelyFuncBinomHeap,
       NumberSystems,
       PurelyRandomAccessList
   other-modules:
