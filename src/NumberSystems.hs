@@ -93,6 +93,7 @@ instance Number DenseBinary where
       recToInt [] = 0
       recToInt (x:xs) = (if x then 1 else 0) + 2 * recToInt xs
 
+-- powers of 2, starting from least significant non-zero value
 newtype SparseBinary = SparseBinary [Int] deriving Show
 unpackSparse (SparseBinary x) = x
 
@@ -137,3 +138,22 @@ instance Number SparseBinary where
   toInt = recToInt . unpackSparse
     where
       recToInt xs = sum [2^x | x<-xs]
+
+-- values of 2**k-1, sparse representation, O(1) inc/dec !
+newtype SkewBinary = SkewBinary [Int] deriving Show
+unpackSkew (SparseBinary x) = x
+
+instance Number SkewBinary where
+  inc :: SkewBinary -> SkewBinary
+  inc (SkewBinary (x1:x2:xs)) = SkewBinary $ if x1 == x2 then  (x1+x2+1):xs else 1:x1:x2:xs
+  inc (SkewBinary []) = SkewBinary [1]
+
+  dec :: SkewBinary -> SkewBinary
+  dec (SkewBinary []) = error "No negative numbers here"
+  dec (SkewBinary (1:xs)) = SkewBinary xs
+  dec (SkewBinary (x:xs)) = let half = x `div` 2 in SkewBinary (half:half:xs)
+
+  add :: SkewBinary -> SkewBinary -> SkewBinary
+  add (SkewBinary []) x = x
+  add x (SkewBinary []) = x
+  add (SkewBinary (x:xs)) (SkewBinary (y:ys)) = if x < y
