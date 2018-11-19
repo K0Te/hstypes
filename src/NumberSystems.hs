@@ -152,8 +152,3 @@ instance Number SkewBinary where
   dec (SkewBinary []) = error "No negative numbers here"
   dec (SkewBinary (1:xs)) = SkewBinary xs
   dec (SkewBinary (x:xs)) = let half = x `div` 2 in SkewBinary (half:half:xs)
-
-  add :: SkewBinary -> SkewBinary -> SkewBinary
-  add (SkewBinary []) x = x
-  add x (SkewBinary []) = x
-  add (SkewBinary (x:xs)) (SkewBinary (y:ys)) = if x < y

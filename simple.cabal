@@ -59,7 +59,8 @@ library
       PurelyFuncRTDeque,
       PurelyFuncBinomHeap,
       NumberSystems,
-      PurelyRandomAccessList
+      PurelyRandomAccessList,
+      SkewBinaryRandomAccessList
   other-modules:
       Paths_simple
   default-language: Haskell2010
